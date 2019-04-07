@@ -49,7 +49,7 @@ before_install:
 
 script:
     - export github_master_5="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
-    - eval "export github_master_5_1=https://github.com/${TREVISTRAVIS_REPO_SLUG}/archive/master.zip"
+    - eval "export github_master_5_1=https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
     - ${CMDPREFIX} call_a_function_that_fails
     - ${global_test} call_a_function_that_fails
     - $global_test call_a_function_that_fails
