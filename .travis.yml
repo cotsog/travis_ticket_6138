@@ -5,7 +5,7 @@ sudo: true
 
 env:
     global:
-        - github_master="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"   ## not working - ${TREVIS_REPO_SLUG} is not expanded
+        - github_master="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
         - global_test="global_variable_TEST"
     matrix:
         - matrix_test="matrix_variable_TEST1"
@@ -19,15 +19,15 @@ matrix:
       language: sh
       env:
           - WINEARCH="win32"
-          - WINEPREFIX="${HOME}/wine/wine32"                                                           ## HOME is expanded here
-          - github_master_6="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
+          - WINEPREFIX="${HOME}/wine/wine32"                                                           ## HOME is expanded here !!!
+          - github_master_1="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
           - WINEPATH="c:/PortableGit32/cmd;c:/Python27-32;c:/Python27-32/Scripts"
           - CMDPREFIX="wine"
           - env_variable_within_matrix="variable_in_matrix_scope_TEST3"
       name: "TEST1, ${matrix_test}, "  ## not working - ${matrix_test} is not expanded
       before_install:
-          - export github_master2="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"          ## not working - ${TREVIS_REPO_SLUG} is not expanded
-          - eval "export github_master2_1=https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"   ## not working
+          - export github_master_2="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
+          - eval "export github_master_2_1=https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
           - printenv
 
     #################################################################################
@@ -36,20 +36,20 @@ matrix:
       name: "TEST1, ${matrix_test}, ${global_test}, ${env_variable_within_matrix}, $matrix_test, $global_test, $env_variable_within_matrix"
       env:
           - WINEPREFIX="${HOME}/wine/wine64"                                                        ## HOME is expanded here
-          - github_master_7="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
+          - github_master_3="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
           - WINEPATH="c:/PortableGit64/cmd;c:/Python27-64;c:/Python27-64/Scripts"
           - CMDPREFIX="wine"
       before_install:
           - printenv
 
 before_install:
-    - export github_master4="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"             ## not working - ${TREVIS_REPO_SLUG} is not expanded
-    - eval "export github_master4_1=https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"      ## not working
-    - eval "$(set github_master4_2=https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip)"      ## not working
+    - export github_master_4="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
+    - eval "export github_master_4_1=https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
+    - eval "$(set github_master_4_2=https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip)"
 
 script:
-    - export github_master5="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"             ## not working - ${TREVIS_REPO_SLUG} is not expanded
-    - eval "export github_master5_1=https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"      ## not working
+    - export github_master_5="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
+    - eval "export github_master_5_1=https://github.com/${TREVISTRAVIS_REPO_SLUG}/archive/master.zip"
     - ${CMDPREFIX} call_a_function_that_fails
     - ${global_test} call_a_function_that_fails
     - $global_test call_a_function_that_fails
