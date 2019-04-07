@@ -5,7 +5,7 @@ sudo: true
 
 env:
     global:
-        - github_master="https://github.com/bitranox/lib_platform/archive/master.zip"
+        - github_master="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
         - global_test="global_variable_TEST"
     matrix:
         - matrix_test="matrix_variable_TEST1"
