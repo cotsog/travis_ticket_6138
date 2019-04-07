@@ -24,8 +24,8 @@ matrix:
           - WINEPATH="c:/PortableGit32/cmd;c:/Python27-32;c:/Python27-32/Scripts"
           - CMDPREFIX="wine"
           - env_variable_within_matrix="variable_in_matrix_scope_TEST3"
-          - test_mx1=${matrix_test}
-      name: "TEST1, ${matrix_test}, "                                                                   ## not working - ${matrix_test} is not expanded
+          - test_mx1=${matrix_test}                                                                     ## NOT WORKING
+      name: "TEST1, ${matrix_test}, ${global_test}, ${env_variable_within_matrix}, $matrix_test, $global_test, $env_variable_within_matrix"   ## not working
       before_install:
           - export github_master_2="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"          ## expanded
           - eval "export github_master_2_1=https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
@@ -34,13 +34,14 @@ matrix:
     #################################################################################
     - os: linux
       language: sh
-      name: "TEST1, ${matrix_test}, ${global_test}, ${env_variable_within_matrix}, $matrix_test, $global_test, $env_variable_within_matrix"   ## not working
       env:
           - WINEPREFIX="${HOME}/wine/wine64"
           - github_master_3="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
           - WINEPATH="c:/PortableGit64/cmd;c:/Python27-64;c:/Python27-64/Scripts"
           - CMDPREFIX="wine"
-          - test_mx2=${matrix_test}
+          - env_variable_within_matrix="variable_in_matrix_scope_TEST4"
+          - test_mx2=${matrix_test}                                                                 ## NOT WORKING
+      name: "TEST1, ${matrix_test}, ${global_test}, ${env_variable_within_matrix}, $matrix_test, $global_test, $env_variable_within_matrix"   ## not working
       before_install:
           - printenv
 
