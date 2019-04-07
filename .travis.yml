@@ -8,8 +8,8 @@ env:
         - global_1="global1"
         - CMDPREFIX="prefix_global"
     matrix:
-        - matrix_config="config_1"
-        - matrix_config="config_2"
+        - matrix_config="config_1"      # seems like those variables are not expanded properly
+        - matrix_config="config_2"      # seems like those variables are not expanded properly
 
 matrix:
     include:
@@ -17,11 +17,15 @@ matrix:
     - os: linux
       language: sh
       env:
-          - test_matrix1=${matrix_config}
+          - test_matrix1=${matrix_config}               # fails !
           - CMDPREFIX="prefix_matrix1"
-      name: "Matrix1 - ${matrix_config}"
+      name: "Matrix1 - Config: ${matrix_config}"        # fails !
       before_install:
-          - set test_matrix1_1=${matrix_config}
+          # I want to do something like:
+          # - if [[ ${matrix_config} == "config_1" ]]; then <do_something>; fi
+          # - if [[ ${matrix_config} == "config_2" ]]; then <do_something>; fi
+
+          - set test_matrix1_1=${matrix_config} # fails !
           - printenv
     #################################################################################
     - os: linux
@@ -29,8 +33,11 @@ matrix:
       env:
           - test_matrix2=${matrix_config}
           - CMDPREFIX="prefix_matrix2"
-      name: "Matrix2 - ${matrix_config}"
+      name: "Matrix2 - Config: ${matrix_config}"
       before_install:
+          # I want to do something like:
+          # - if [[ ${matrix_config} == "config_1" ]]; then <do_something>; fi
+          # - if [[ ${matrix_config} == "config_2" ]]; then <do_something>; fi
           - set test_matrix2_1=${matrix_config}
           - printenv
     #################################################################################
@@ -38,4 +45,5 @@ matrix:
 script:
     - ${CMDPREFIX} call_a_function_that_fails
     - ${global_1} call_a_function_that_fails
+    - ${matrix_config} call_a_function_that_fails       # fails !
     - printenv
