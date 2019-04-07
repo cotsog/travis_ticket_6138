@@ -25,7 +25,7 @@ matrix:
           - env_variable_within_matrix="variable_in_matrix_scope_TEST3"
       name: "TEST1, ${matrix_test}, "
       before_install:
-          - export github_master2="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
+          - sh export github_master2="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
           - printenv
 
     #################################################################################
