@@ -26,7 +26,6 @@ matrix:
       name: "TEST1, ${matrix_test}, "
       before_install:
           - export github_master2="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"  ## not working - ${TREVIS_REPO_SLUG} is not expanded
-          - sh export github_master3="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"  ## not working - ${TREVIS_REPO_SLUG} is not expanded
           - printenv
 
     #################################################################################
