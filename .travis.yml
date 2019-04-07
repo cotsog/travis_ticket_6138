@@ -23,18 +23,23 @@ matrix:
           - WINEPATH="c:/PortableGit32/cmd;c:/Python27-32;c:/Python27-32/Scripts"
           - CMDPREFIX="wine"
           - env_variable_within_matrix="variable_in_matrix_scope_TEST3"
-      name: "TEST1, ${matrix_test}, ${global_test}, ${env_variable_within_matrix}, $matrix_test, $global_test, $env_variable_within_matrix"
+      name: "TEST1, ${matrix_test}, "
+      before_install:
+          - printenv
 
     #################################################################################
     - os: linux
       language: sh
+      name: "TEST1, ${matrix_test}, ${global_test}, ${env_variable_within_matrix}, $matrix_test, $global_test, $env_variable_within_matrix"
       env:
           - WINEPREFIX="${HOME}/wine/wine64"
           - WINEPATH="c:/PortableGit64/cmd;c:/Python27-64;c:/Python27-64/Scripts"
           - CMDPREFIX="wine"
-          - env_variable_within_matrix="variable_in_matrix_scope_TEST4"
-      name: "TEST1, ${matrix_test}, ${global_test}, ${env_variable_within_matrix}, $matrix_test, $global_test, $env_variable_within_matrix"
+      before_install:
+          - printenv
 
+before_install:
+    - printenv
 
 script:
     - ${CMDPREFIX} call_a_function_that_fails
