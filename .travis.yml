@@ -25,7 +25,6 @@ matrix:
           - env_variable_within_matrix="variable_in_matrix_scope_TEST3"
       name: "TEST1, ${matrix_test}, "
       before_install:
-          # - if [[ $TRAVIS_PYTHON_VERSION == pypy3.5-6.0 ]]; then pip install "pytest-cov==2.6.0"; fi
           - export github_master2="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
           - printenv
 
