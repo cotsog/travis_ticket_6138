@@ -1,0 +1,34 @@
+language: python
+group: travis_latest
+dist: xenial
+sudo: true
+
+env:
+    global:
+        - github_master="https://github.com/bitranox/lib_platform/archive/master.zip"
+    matrix:
+        - matrix_test="TEST1"
+        - matrix_test="TEST2"
+
+    #################################################################################
+matrix:
+    include:
+    #################################################################################
+    - os: linux
+      language: sh
+      name: "TEST1, ${matrix_test}"
+      env:
+          - WINEARCH="win32"
+          - WINEPREFIX="${HOME}/wine/wine32"
+          - WINEPATH="c:/PortableGit32/cmd;c:/Python27-32;c:/Python27-32/Scripts"
+          - CMDPREFIX="wine"
+    #################################################################################
+    - os: linux
+      language: sh
+      name: "TEST1, ${matrix_test}"
+      env:
+          - WINEPREFIX="${HOME}/wine/wine64"
+          - WINEPATH="c:/PortableGit64/cmd;c:/Python27-64;c:/Python27-64/Scripts"
+          - CMDPREFIX="wine"
+script:
+    - ${CMDPREFIX} call_a_function_that_fails
