@@ -25,7 +25,8 @@ matrix:
           - env_variable_within_matrix="variable_in_matrix_scope_TEST3"
       name: "TEST1, ${matrix_test}, "
       before_install:
-          - sh export github_master2="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
+          - export github_master2="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"  ## not working - ${TREVIS_REPO_SLUG} is not expanded
+          - sh export github_master3="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"  ## not working - ${TREVIS_REPO_SLUG} is not expanded
           - printenv
 
     #################################################################################
@@ -40,9 +41,10 @@ matrix:
           - printenv
 
 before_install:
-    - printenv
+    - export github_master4="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
 
 script:
+    - export github_master5="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
     - ${CMDPREFIX} call_a_function_that_fails
     - ${global_test} call_a_function_that_fails
     - $global_test call_a_function_that_fails
@@ -50,3 +52,4 @@ script:
     - $matrix_test call_a_function_that_fails
     - ${env_variable_within_matrix} call_a_function_that_fails
     - $env_variable_within_matrix call_a_function_that_fails
+    - printenv
