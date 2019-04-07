@@ -5,7 +5,7 @@ sudo: true
 
 env:
     global:
-        - github_master="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
+        - github_master="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"                     ## expanded
         - global_test="global_variable_TEST"
     matrix:
         - matrix_test="matrix_variable_TEST1"
@@ -19,42 +19,43 @@ matrix:
       language: sh
       env:
           - WINEARCH="win32"
-          - WINEPREFIX="${HOME}/wine/wine32"                                                           ## HOME is expanded here !!!
-          - github_master_1="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
+          - WINEPREFIX="${HOME}/wine/wine32"
+          - github_master_1="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"                 ## expanded
           - WINEPATH="c:/PortableGit32/cmd;c:/Python27-32;c:/Python27-32/Scripts"
           - CMDPREFIX="wine"
           - env_variable_within_matrix="variable_in_matrix_scope_TEST3"
-      name: "TEST1, ${matrix_test}, "  ## not working - ${matrix_test} is not expanded
+          - test_mx1=${matrix_test}
+      name: "TEST1, ${matrix_test}, "                                                                   ## not working - ${matrix_test} is not expanded
       before_install:
-          - export github_master_2="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
-          - eval "export github_master_2_1=https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
+          - export github_master_2="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"          ## expanded
+          - eval "export github_master_2_1=https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
           - printenv
 
     #################################################################################
     - os: linux
       language: sh
-      name: "TEST1, ${matrix_test}, ${global_test}, ${env_variable_within_matrix}, $matrix_test, $global_test, $env_variable_within_matrix"
+      name: "TEST1, ${matrix_test}, ${global_test}, ${env_variable_within_matrix}, $matrix_test, $global_test, $env_variable_within_matrix"   ## not working
       env:
-          - WINEPREFIX="${HOME}/wine/wine64"                                                        ## HOME is expanded here
+          - WINEPREFIX="${HOME}/wine/wine64"
           - github_master_3="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
           - WINEPATH="c:/PortableGit64/cmd;c:/Python27-64;c:/Python27-64/Scripts"
           - CMDPREFIX="wine"
+          - test_mx2=${matrix_test}
       before_install:
           - printenv
 
 before_install:
-    - export github_master_4="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
-    - eval "export github_master_4_1=https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
-    - eval "$(set github_master_4_2=https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip)"
+    - export github_master_4="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"            ## expanded
+    - eval "export github_master_4_1=https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"     ## expanded
 
 script:
-    - export github_master_5="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
-    - eval "export github_master_5_1=https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"
+    - export github_master_5="https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"            ## expanded
+    - eval "export github_master_5_1=https://github.com/${TRAVIS_REPO_SLUG}/archive/master.zip"     ## expanded
     - ${CMDPREFIX} call_a_function_that_fails
-    - ${global_test} call_a_function_that_fails
-    - $global_test call_a_function_that_fails
-    - ${matrix_test} call_a_function_that_fails
-    - $matrix_test call_a_function_that_fails
-    - ${env_variable_within_matrix} call_a_function_that_fails
-    - $env_variable_within_matrix call_a_function_that_fails
+    - ${global_test} call_a_function_that_fails                                                     ## working
+    - $global_test call_a_function_that_fails                                                       ## working
+    - ${matrix_test} call_a_function_that_fails                                                     ## NOT working
+    - $matrix_test call_a_function_that_fails                                                       ## NOT working
+    - ${env_variable_within_matrix} call_a_function_that_fails                                      ## working
+    - $env_variable_within_matrix call_a_function_that_fails                                        ## working
     - printenv
