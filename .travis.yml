@@ -26,6 +26,7 @@ matrix:
       name: "TEST1, ${matrix_test}, "
       before_install:
           - export github_master2="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"  ## not working - ${TREVIS_REPO_SLUG} is not expanded
+          - eval "export github_master2_1=https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
           - printenv
 
     #################################################################################
@@ -40,10 +41,11 @@ matrix:
           - printenv
 
 before_install:
-    - export github_master4="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
+    - export github_master4="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"  ## not working - ${TREVIS_REPO_SLUG} is not expanded
+    - eval "export github_master4_1=https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
 
 script:
-    - export github_master5="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"
+    - export github_master5="https://github.com/${TREVIS_REPO_SLUG}/archive/master.zip"  ## not working - ${TREVIS_REPO_SLUG} is not expanded
     - ${CMDPREFIX} call_a_function_that_fails
     - ${global_test} call_a_function_that_fails
     - $global_test call_a_function_that_fails
