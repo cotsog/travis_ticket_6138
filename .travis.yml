@@ -6,9 +6,10 @@ sudo: true
 env:
     global:
         - github_master="https://github.com/bitranox/lib_platform/archive/master.zip"
+        - global_test="global_variable_TEST"
     matrix:
-        - matrix_test="TEST1"
-        - matrix_test="TEST2"
+        - matrix_test="matrix_variable_TEST1"
+        - matrix_test="matrix_variable_TEST2"
 
     #################################################################################
 matrix:
@@ -16,19 +17,27 @@ matrix:
     #################################################################################
     - os: linux
       language: sh
-      name: "TEST1, ${matrix_test}"
       env:
           - WINEARCH="win32"
           - WINEPREFIX="${HOME}/wine/wine32"
           - WINEPATH="c:/PortableGit32/cmd;c:/Python27-32;c:/Python27-32/Scripts"
           - CMDPREFIX="wine"
+          - env_variable_within_matrix="variable_in_matrix_scope_TEST3"
+      name: "TEST1, ${matrix_test}, "
+
     #################################################################################
     - os: linux
       language: sh
-      name: "TEST1, ${matrix_test}"
+      name: "TEST1, ${matrix_test}, ${global_test}, ${env_variable_within_matrix}, $matrix_test, $global_test, $env_variable_within_matrix"
       env:
           - WINEPREFIX="${HOME}/wine/wine64"
           - WINEPATH="c:/PortableGit64/cmd;c:/Python27-64;c:/Python27-64/Scripts"
           - CMDPREFIX="wine"
 script:
     - ${CMDPREFIX} call_a_function_that_fails
+    - ${global_test} call_a_function_that_fails
+    - $global_test call_a_function_that_fails
+    - ${matrix_test} call_a_function_that_fails
+    - $matrix_test call_a_function_that_fails
+    - ${env_variable_within_matrix} call_a_function_that_fails
+    - $env_variable_within_matrix call_a_function_that_fails
